@@ -226,4 +226,89 @@ public class MyController {
 		testRepository.save(t);
 		return t;
 	}
+	@RequestMapping("/number_1")
+	public TestRecord electNumber_1(@RequestParam int thisNumber) {
+		Long timeStart = System.currentTimeMillis();
+		List<Integer> list = new ArrayList<Integer>(thisNumber), removeList = new ArrayList<Integer>(thisNumber);
+
+		for (int i = 1; i <= thisNumber; i++) {
+			list.add(i);
+		}
+
+		int a = 0, b = 0;
+		while (true) {
+			if (list.size() > 1) {
+				b++;
+				log.info("————————————————第{}轮开始：list.size={}，a={}", b, list.size(), a);
+				log.debug(list.toString());
+				for (int i = 0; i < list.size(); i++) {
+					a++;
+					if (a % 2 == 1) {
+						removeList.add(list.get(i));
+					}
+				}
+				list.removeAll(removeList);
+				log.info("第{}轮结束！结果如下：", b);
+				log.debug(list.toString());
+				removeList.clear();
+				;
+				log.info("a={}", a);
+			} else {
+				break;
+			}
+		}
+		Long timeEnd = System.currentTimeMillis();
+		TestRecord t = new TestRecord();
+		t.setNumber(thisNumber);
+		t.setCounts(a);
+		t.setRounds(b);
+		t.setRusult_number(list.get(0));
+		t.setTimes(timeEnd - timeStart);
+		t.setFuncName("electNumber");
+		testRepository.save(t);
+		return t;
+	}
+	@RequestMapping("/number3_1")
+	public TestRecord electNumber3_1(@RequestParam int thisNumber) {
+		Long timeStart = System.currentTimeMillis();
+		List<Integer> list = new ArrayList<Integer>(thisNumber), removeList = new ArrayList<Integer>(thisNumber);
+
+		for (int i = 1; i <= thisNumber; i++) {
+			list.add(i);
+		}
+
+		int a = 0, b = 0;
+		while (true) {
+			if (list.size() > 1) {
+				b++;
+				log.info("————————————————第{}轮开始：list.size={}，a={}", b, list.size(), a);
+				// log.info(list.toString());
+				for (int i = 0; i < list.size(); i++) {
+					a++;
+					if (a % 2 == 0) {
+						removeList.add(list.get(i));
+					}
+				}
+				list.clear();
+				list.addAll(removeList);
+				log.info("第{}轮结束！结果如下：", b);
+				// log.info(list.toString());
+				removeList.clear();
+				;
+				log.info("a={}", a);
+			} else {
+				break;
+			}
+		}
+		Long timeEnd = System.currentTimeMillis();
+		TestRecord t = new TestRecord();
+		t.setNumber(thisNumber);
+		t.setCounts(a);
+		t.setRounds(b);
+		t.setRusult_number(list.get(0));
+		t.setTimes(timeEnd - timeStart);
+		t.setFuncName("electNumber3");
+		testRepository.save(t);
+		return t;
+	}
 }
